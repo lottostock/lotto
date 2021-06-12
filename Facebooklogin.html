@@ -153,13 +153,12 @@
 	  userinfo.innerText = `สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}`;
 	  document.body.append(userinfo);
 
-	  userinfo = document.getElementById(`สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}`).innerHTML;
-          new_html = "<div id='review-user'>" + myJson.name + "</div>";
-          document.getElementById(userinfo).innerHTML = new_html;
 	      
 	  let userpic = document.createElement('img');
 	  userpic.src = myJson.picture.data.url;
 	  document.body.append(userpic);
+	      
+	    
       });
     </script>
           </div>
@@ -168,9 +167,10 @@
 
           <div class="col-lg-4 mb-4 mb-lg-0">
        <p class="review-user">
-                      <img src="`${myJson.userpic}`" alt="Image" class="img-fluid rounded-circle mb-3">
+	                append(userpic)
+                      <img src=`${myJson.picture.data.url}` alt="Image" class="img-fluid rounded-circle mb-3">
                       <span class="d-block">
-                        <span class="text-black">`สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}`</span>, &mdash; App User
+                        div.append(userinfo)
                       </span>
                     </p>
             </div>
