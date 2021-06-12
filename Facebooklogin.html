@@ -98,46 +98,14 @@
           <div class="col-md-7 mb-5">
             <h2 class="section-heading">เข้าสู่ระบบ</h2>
             <p>เข้าสู่ระบบด้วยบัญชี Facebook</p>
-          </div>
-        </div>
-        <div class="row align-items-stretch">
-
-          <div class="col-lg-4 mb-4 mb-lg-0">
-           <script>
-
-      // This is an example of a SPA (Single Page App) with OAuth authentication
-      //
-      // For simplicity, we are using the "Implicit" flow, which means the 
-      // access_token is part of the URL being sent to the application
-      //
-
-      // - Step 1 -
-      // if page doesn't include access token, we need to authroize
-      //
+		  <script>
       if (!document.location.href.includes('access_token')) {
-	  //
-	  // Many apps would display a "Login" button to alert users that
-	  // they need to login.  I'm simply redirecting to the facebook login
-	  // page.
-	  //
-	  // IMPORTANT: You will need to register as the application developer
-	  //            on facebook and create an APP, which will provide
-	  //            you with a unique client_id.  
-	  //
-	  //            Visit https://developers.facebook.com to create
-	  //            your client_id (call the APP ID in the facebook console)
-	  
-	  
-	  // This will redirect the page to facebook.  Pay special attention to the query
-	  // parameters, we are asking for a token to be sent back to the redirect_uri
 	  let client_id = '492291348462899';
 	  document.location.href= [`https://www.facebook.com/v3.2/dialog/oauth?client_id=${client_id}`,
 				   `redirect_uri=${document.location.href}`,
 				   `response_type=token`,
-				   `scope=email,public_profile`].join('&') ;
-	  
+				   `scope=email,public_profile`].join('&') ;	  
       } 
-
       // - Step 2 -
       // If we are here, we have an access token (the test from Step 1 is positive).
       console.log('Got a token!!');
@@ -178,23 +146,27 @@
 	  // the console and also to the HTML
 	  console.log(myJson);
 
-
+         
 	  // Pure javascript to insert a couple of components to the page
 	  let userinfo = document.createElement('h2');
-	  userinfo.innerText = `สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}`;
+	  userinfo.innerText = `<h2 class="section-heading">สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}</h2>`;
 	  document.body.append(userinfo);
 
 	  let userpic = document.createElement('img');
 	  userpic.src = myJson.picture.data.url;
 	  document.body.append(userpic);
       });
-      
-      
     </script>
+          </div>
+        </div>
+        <div class="row align-items-stretch">
+
+          <div class="col-lg-4 mb-4 mb-lg-0">
+       
             </div>
           </div>
 	  
-    
+     </section>
   <!-- ======= Footer ======= -->
   <footer class="footer" role="contentinfo">
     <div class="container">
