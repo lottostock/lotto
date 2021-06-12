@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>บริษัท สุ่มเสี่ยง LOTTO จำกัด - LOGIN</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: SoftLand - v4.3.0
+  * Template URL: https://bootstrapmade.com/softland-bootstrap-app-landing-page-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v11.0&appId=504131267280677&autoLogAppEvents=1" nonce="6N5JHziy"></script>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between align-items-center">
+
+      <div class="logo">
+        <h1><a href="index.html">บริษัท สุ่มเสี่ยง LOTTO จำกัด</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="active " href="index.html">หน้าหลัก</a></li>
+          <li><a href="https://lin.ee/he9ZWhT"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36" border="0"></a></li>&nbsp;&nbsp;
+          <li><div class="fb-like" data-href="https://www.facebook.com/%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%A9%E0%B8%B1%E0%B8%97-%E0%B8%AA%E0%B8%B8%E0%B9%88%E0%B8%A1%E0%B9%80%E0%B8%AA%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%87-Developers-101988411153554" data-width="" data-layout="button" data-action="like" data-size="large" data-share="true"></div></li>
+        
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+    <script>
+
+      // This is an example of a SPA (Single Page App) with OAuth authentication
+      //
+      // For simplicity, we are using the "Implicit" flow, which means the 
+      // access_token is part of the URL being sent to the application
+      //
+
+      // - Step 1 -
+      // if page doesn't include access token, we need to authroize
+      //
+      if (!document.location.href.includes('access_token')) {
+	  //
+	  // Many apps would display a "Login" button to alert users that
+	  // they need to login.  I'm simply redirecting to the facebook login
+	  // page.
+	  //
+	  // IMPORTANT: You will need to register as the application developer
+	  //            on facebook and create an APP, which will provide
+	  //            you with a unique client_id.  
+	  //
+	  //            Visit https://developers.facebook.com to create
+	  //            your client_id (call the APP ID in the facebook console)
+	  
+	  
+	  // This will redirect the page to facebook.  Pay special attention to the query
+	  // parameters, we are asking for a token to be sent back to the redirect_uri
+	  let client_id = '492291348462899';
+	  document.location.href= [`https://www.facebook.com/v3.2/dialog/oauth?client_id=${client_id}`,
+				   `redirect_uri=${document.location.href}`,
+				   `response_type=token`,
+				   `scope=email,public_profile`].join('&') ;
+	  
+      } 
+
+      // - Step 2 -
+      // If we are here, we have an access token (the test from Step 1 is positive).
+      console.log('Got a token!!');
+
+      // we could store the token in a cookie or local storage, or just in a variable
+      // here we simply parsed it out from the url using regex
+      var matches = document.location.href.match(/(.*)\#access_token\=(.*?)\&/);
+      var app_url = matches[1];
+      var token = matches[2];
+
+      // - Step 3 -
+      // Now that we have a token, we can make API calls to facebook.
+      // Here we simply retrieve the user's name, email, and profile pic
+      // to confirm the user's identity
+      fetch('https://graph.facebook.com/v11.0/me?fields=name,email,picture', {
+	  // IMPORTANT:  You must include the token in the Authroization header
+	  //             Otherwise how can facebook know who is calling?
+	  headers:{
+	      "Authorization": `Bearer ${token}`
+	  }
+      }).then(function(response) {
+	  // Extra error check, if we get an invalid response, it means that
+	  // our token is invalid.  We will restart the login flow by
+	  // clearing the access_token
+	  console.log(response);
+	  if (response.status != 200) {
+	      document.location.href = app_url;
+	      token = null;
+	  }
+	  return response.json();
+      }).then(function(myJson) {
+	  // - Step 4 -
+	  // Our facebook API call is successful, this means
+	  // our token is valid and we have the user's name, email and pic
+	  //
+	  // At this point, it's up to your application to decide what to do
+	  // with the information.  I'm simply going to display it to
+	  // the console and also to the HTML
+	  console.log(myJson);
+
+
+	  // Pure javascript to insert a couple of components to the page
+	  let userinfo = document.createElement('h2');
+	  userinfo.innerText = `สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}`;
+	  document.body.append(userinfo);
+
+	  let userpic = document.createElement('img');
+	  userpic.src = myJson.picture.data.url;
+	  document.body.append(userpic);
+      });
+      
+      
+    </script>
+  <!-- ======= Footer ======= -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4 mb-md-0">
+          <h3>เกี่ยวกับ บริษัท สุ่มเสี่ยง LOTTO จำกัด</h3>
+          <p>มีระบบการขึ้นเงินที่รวดเร็ว เมื่อลอตเตอรี่ออกรางวัลนอกจากลูกค้าทุกท่านจะสามารถตรวจผลรางวัลด้วยตัวเองที่หน้าเว็บไซต์แล้ว เรายังมีระบบแจ้งเตือนเมื่อคุณถูกลอตเตอรี่ทันทีด้วย sms และการแจ้งเตือนผ่านทางไลน์ คุณลูกค้าสามารถแจ้งขึ้นรางวัลได้ทันที ที่ถูกรางวัล และเราจะโอนเงินให้ภายใน 24 ชม. ไม่มีค่าธรรมเนียมแม้แต่บาทเดียว ถูก 6 ล้าน รับ 6 ล้าน</p>
+          <p class="social">
+            <a href="https://www.facebook.com/pncklottobot"><span class="bi bi-twitter"></span></a>
+            <a href="https://www.facebook.com/pncklottobot"><span class="bi bi-facebook"></span></a>
+            <a href="https://www.facebook.com/pncklottobot"><span class="bi bi-instagram"></span></a>
+            <a href="https://www.facebook.com/pncklottobot"><span class="bi bi-linkedin"></span></a>
+          </p>
+        </div>
+        <div class="col-md-7 ms-auto">
+          <div class="row site-section pt-0">
+            <div class="col-md-4 mb-4 mb-md-0">
+              <h3>Navigation</h3>
+              <ul class="list-unstyled">
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+            <div class="col-md-4 mb-4 mb-md-0">
+              <h3>Services</h3>
+              <ul class="list-unstyled">
+                <li><a href="#">Team</a></li>
+                <li><a href="#">Collaboration</a></li>
+                <li><a href="#">Todos</a></li>
+                <li><a href="#">Events</a></li>
+              </ul>
+            </div>
+            <div class="col-md-4 mb-4 mb-md-0">
+              <h3>Downloads</h3>
+              <ul class="list-unstyled">
+                <li><a href="#">Get from the App Store</a></li>
+                <li><a href="#">Get from the Play Store</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center text-center">
+        <div class="col-md-7">
+          <p class="copyright">&copy; Copyright ᴘɴᴄᴋ@ꜱᴋᴛ ᴅᴇᴠᴇʟᴏᴘᴇʀꜱ ᴀᴘᴘ All Rights Reserved</p>
+          <div class="credits">
+            <!--
+            All the links in the footer should remain intact.
+            You can delete the links only if you purchased the pro version.
+            Licensing information: https://bootstrapmade.com/license/
+            Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=SoftLand
+          -->
+            Designed by <a href="https://fb-lotto-n.herokuapp.com/">ᴘɴᴄᴋ@ꜱᴋᴛ</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+<!-- Messenger ปลั๊กอินแชท Code -->
+    
+
+    <!-- Your ปลั๊กอินแชท code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+      var chatbox = document.getElementById('fb-customer-chat');
+      chatbox.setAttribute("page_id", "101988411153554");
+      chatbox.setAttribute("attribution", "biz_inbox");
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v11.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/th_TH/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
