@@ -149,7 +149,7 @@
          
 	  // Pure javascript to insert a couple of components to the page
 	  let userinfo = document.createElement('h2');
-	  userinfo.innerText = `<h2 class="section-heading">สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}</h2>`;
+	  userinfo.innerText = `สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}`;
 	  document.body.append(userinfo);
 
 	  let userpic = document.createElement('img');
@@ -162,11 +162,17 @@
         <div class="row align-items-stretch">
 
           <div class="col-lg-4 mb-4 mb-lg-0">
-       
+       <p class="review-user">
+                      <img src="`${myJson.userpic}`" alt="Image" class="img-fluid rounded-circle mb-3">
+                      <span class="d-block">
+                        <span class="text-black">`สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}`</span>, &mdash; App User
+                      </span>
+                    </p>
             </div>
           </div>
 	  
      </section>
+	    </main><!-- End #main -->
   <!-- ======= Footer ======= -->
   <footer class="footer" role="contentinfo">
     <div class="container">
