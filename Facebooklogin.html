@@ -146,12 +146,17 @@
 	  // the console and also to the HTML
 	  console.log(myJson);
 
-         
+        
+	  
 	  // Pure javascript to insert a couple of components to the page
 	  let userinfo = document.createElement('h2');
 	  userinfo.innerText = `สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}`;
 	  document.body.append(userinfo);
 
+	  userinfo = document.getElementById(`สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}`).innerHTML;
+          new_html = "<div id='review-user'>" + myJson.name + "</div>";
+          document.getElementById(userinfo).innerHTML = new_html;
+	      
 	  let userpic = document.createElement('img');
 	  userpic.src = myJson.picture.data.url;
 	  document.body.append(userpic);
