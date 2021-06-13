@@ -98,140 +98,64 @@
         <div class="row justify-content-center text-center">
           <div class="col-md-7 mb-5">
             <h2 class="section-heading">เข้าสู่ระบบ</h2>
-            <p>เข้าสู่ระบบด้วยบัญชี Facebook</p>
-		  
-		  
-		  
+            <p>เข้าสู่ระบบด้วยบัญชี Facebook</p>		  
 <script>
+
+  function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+    console.log('statusChangeCallback');
+    console.log(response);                   // The current login status of the person.
+    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+      testAPI();  
+    } else {                                 // Not logged into your webpage or we are unable to tell.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this webpage.';
+    }
+  }
+
+
+  function checkLoginState() {               // Called when a person is finished with the Login Button.
+    FB.getLoginStatus(function(response) {   // See the onlogin handler
+      statusChangeCallback(response);
+    });
+  }
+
+
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '492291348462899',
-      cookie     : true,
-      xfbml      : true,
-      version    : 'v11.0'
+      cookie     : true,                     // Enable cookies to allow the server to access the session.
+      xfbml      : true,                     // Parse social plugins on this webpage.
+      version    : 'v11.0'           // Use this Graph API version for this call.
     });
-      
-    FB.AppEvents.logPageView();   
-      
+
+
+    FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+      statusChangeCallback(response);        // Returns the login status.
+    });
   };
+ 
+  function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
 </script>
-		  <script>
-      if (!document.location.href.includes('access_token')) {
-	  let client_id = '492291348462899';
-	  document.location.href= [`https://www.facebook.com/v3.2/dialog/oauth?client_id=${client_id}`,
-				   `redirect_uri=${document.location.href}`,
-				   `response_type=token`,
-				   `scope=email,public_profile`].join('&') ;	  
-      } 
-			  
-			  
-FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-});
-			  
-{
-    status: 'connected',
-    authResponse: {
-        accessToken: '...',
-        expiresIn:'...',
-        signedRequest:'...',
-        userID:'...'
-    }
-}
-			  
-<fb:login-button 
-  scope="public_profile,email"
-  onlogin="checkLoginState();">
+
+
+<!-- The JS SDK Login Button -->
+
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
 </fb:login-button>
-			  
-function checkLoginState() {
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-}
-			  
-			  <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true"></div>
-      // - Step 2 -
-      // If we are here, we have an access token (the test from Step 1 is positive).
-      console.log('Got a token!!');
 
-      // we could store the token in a cookie or local storage, or just in a variable
-      // here we simply parsed it out from the url using regex
-      var matches = document.location.href.match(/(.*)\#access_token\=(.*?)\&/);
-      var app_url = matches[1];
-      var token = matches[2];
+<div id="status">
+</div>
 
-      // - Step 3 -
-      // Now that we have a token, we can make API calls to facebook.
-      // Here we simply retrieve the user's name, email, and profile pic
-      // to confirm the user's identity
-      fetch('https://graph.facebook.com/v11.0/me?fields=name,email,picture', {
-	  // IMPORTANT:  You must include the token in the Authroization header
-	  //             Otherwise how can facebook know who is calling?
-	  headers:{
-	      "Authorization": `Bearer ${token}`
-	  }
-      }).then(function(response) {
-	  // Extra error check, if we get an invalid response, it means that
-	  // our token is invalid.  We will restart the login flow by
-	  // clearing the access_token
-	  console.log(response);
-	  if (response.status != 200) {
-	      document.location.href = app_url;
-	      token = null;
-	  }
-	  return response.json();
-      }).then(function(myJson) {
-	  // - Step 4 -
-	  // Our facebook API call is successful, this means
-	  // our token is valid and we have the user's name, email and pic
-	  //
-	  // At this point, it's up to your application to decide what to do
-	  // with the information.  I'm simply going to display it to
-	  // the console and also to the HTML
-	  console.log(myJson);
 
-        
-	  
-	  // Pure javascript to insert a couple of components to the page
-	  let userinfo = document.createElement('h2');
-	  userinfo.innerText = `สุ่มเสี่ยงlotto สวัสดีครับ ${myJson.name}`;
-	  document.body.append(userinfo);
 
-	      
-	  let userpic = document.createElement('img');
-	  userpic.src = myJson.picture.data.url;
-	  document.body.append(userpic);
-	      
-	    
-      });
-    </script>
-          </div>
-        </div>
-        <div class="row align-items-stretch">
-
-          <div class="col-lg-4 mb-4 mb-lg-0">
-       
-                           
-                <p class="review-user">
-                      <img document.body.append(userpic) alt="Image" class="img-fluid rounded-circle mb-3">
-                      <span class="d-block">
-                        <span class="text-black">document.body.append(userinfo);&mdash; App User
-                      </span>
-                    </p>   
-                     
-                  
-            </div>
-          </div>
-	  
      </section>
 	    </main><!-- End #main -->
   <!-- ======= Footer ======= -->
@@ -296,32 +220,6 @@ function checkLoginState() {
 
     </div>
   </footer>
-<!-- Messenger ปลั๊กอินแชท Code -->
-    
-
-    <!-- Your ปลั๊กอินแชท code -->
-    <div id="fb-customer-chat" class="fb-customerchat">
-    </div>
-
-    <script>
-      var chatbox = document.getElementById('fb-customer-chat');
-      chatbox.setAttribute("page_id", "101988411153554");
-      chatbox.setAttribute("attribution", "biz_inbox");
-      window.fbAsyncInit = function() {
-        FB.init({
-          xfbml            : true,
-          version          : 'v11.0'
-        });
-      };
-
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/th_TH/sdk/xfbml.customerchat.js';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
@@ -332,7 +230,8 @@ function checkLoginState() {
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
+<!-- Load the JS SDK asynchronously -->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 </body>
 
 </html>
