@@ -36,6 +36,7 @@
 </head>
 
 <body>
+	
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v11.0&appId=504131267280677&autoLogAppEvents=1" nonce="6N5JHziy"></script>
   <!-- ======= Header ======= -->
@@ -98,6 +99,30 @@
           <div class="col-md-7 mb-5">
             <h2 class="section-heading">เข้าสู่ระบบ</h2>
             <p>เข้าสู่ระบบด้วยบัญชี Facebook</p>
+		  
+		  
+		  
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '492291348462899',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v11.0'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 		  <script>
       if (!document.location.href.includes('access_token')) {
 	  let client_id = '492291348462899';
@@ -106,6 +131,34 @@
 				   `response_type=token`,
 				   `scope=email,public_profile`].join('&') ;	  
       } 
+			  
+			  
+FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+});
+			  
+{
+    status: 'connected',
+    authResponse: {
+        accessToken: '...',
+        expiresIn:'...',
+        signedRequest:'...',
+        userID:'...'
+    }
+}
+			  
+<fb:login-button 
+  scope="public_profile,email"
+  onlogin="checkLoginState();">
+</fb:login-button>
+			  
+function checkLoginState() {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
+			  
+			  <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true"></div>
       // - Step 2 -
       // If we are here, we have an access token (the test from Step 1 is positive).
       console.log('Got a token!!');
